@@ -2891,19 +2891,37 @@ span.IN-widget {
     opacity: 0
 }
 
-.overlay-machine-info .machine-info-content {
-    height: 100%
+.overlay-machine-info {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.6); /* or adjust opacity as needed */
+    color: #FFF;
+    z-index: 2;
+    padding: 0px 0;
+    text-align: center;
 }
 
-    .overlay-machine-info .machine-info-content .machine-name {
-        font-family: 'Museo-700', sans-serif;
-        font-size: 16px;
-        font-weight: 500;
-        color: #FFF;
-        margin-bottom: 0;
+    .overlay-machine-info .machine-info-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
         width: 100%;
-        text-align: center
+        text-align: center;
     }
+
+        .overlay-machine-info .machine-info-content .machine-name {
+            font-family: 'Museo-700', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: #FFF;
+            margin-bottom: 0;
+            width: 100%;
+            text-align: center;
+            line-height: 1.3;
+        }
+
 
 #our-company {
     background: url('../images/V6/innovation/four-pillars-back.png')bottom left no-repeat #2093d1;

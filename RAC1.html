@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reveal Automation & Controls</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Poppins', sans-serif; line-height: 1.6; background: #f4f4f4; }
+    a { text-decoration: none; color: inherit; }
+
+    /* HEADER */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 5%;
+      z-index: 1000;
+      animation: slideDown 0.7s ease forwards;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+    .logo img {
+      height: 50px;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: #fff;
+      font-weight: 500;
+      padding: 0.5rem 0.8rem;
+      transition: background 0.3s, transform 0.3s;
+      cursor: pointer;
+    }
+    nav a:hover {
+      background: #333;
+      border-radius: 5px;
+      transform: scale(1.1);
+    }
+    .enquire-btn {
+      background: #e67e22;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: 600;
+    }
+
+    /* Hamburger for Mobile */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+      transition: all 0.3s;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: #111;
+      width: 100%;
+      text-align: center;
+      overflow: hidden;
+    }
+    .mobile-nav a {
+      padding: 1rem;
+      border-top: 1px solid #333;
+      color: white;
+      cursor: pointer;
+    }
+    .mobile-nav a:hover {
+      background: #222;
+    }
+    .mobile-nav.active {
+      display: flex;
+      animation: fadeIn 0.5s ease forwards;
+    }
+
+    /* HERO */
+    .hero {
+      padding: 7rem 2rem 4rem;
+      text-align: center;
+      background: linear-gradient(135deg, #1e1e1e, #3c3c3c);
+      color: white;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+    .hero h1 {
+      margin-top: 2rem;
+      font-size: 2.5rem;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .hero button {
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      background: #e67e22;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .hero button:hover {
+      background: #d35400;
+      transform: scale(1.05);
+    }
+
+    /* Animation */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* PRODUCTS */
+    .products {
+      padding: 4rem 5%;
+      background: #fff;
+      scroll-margin-top: 70px; /* Add scroll margin for smooth scrolling with fixed header */
+    }
+    .products h2 {
+      text-align: center;
+      margin-bottom: 3rem;
+      font-size: 2.5rem;
+      color: #222;
+      animation: fadeInUp 1s forwards;
+    }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    .product-card {
+      position: relative;
+      background: #f9f9f9;
+      border-radius: 10px;
+      padding: 1rem;
+      text-align: center;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .product-card img {
+      max-width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.5s ease;
+    }
+    .product-card h3 {
+      margin: 1rem 0;
+      font-size: 1.2rem;
+      color: #333;
+    }
+    .product-card .details {
+      opacity: 0;
+      transform: translateY(20px);
+      font-size: 0.9rem;
+      margin-top: 0.5rem;
+      transition: all 0.4s ease;
+      color: #555;
+    }
+    .product-card button {
+      background: #3498db;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 5px;
+      color: white;
+      margin-top: 0.8rem;
+      cursor: pointer;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+    }
+    .product-card::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      border-radius: 10px;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .product-card:hover img {
+      transform: scale(1.05);
+    }
+    .product-card:hover::after {
+      opacity: 1;
+    }
+    .product-card:hover button,
+    .product-card:hover .details {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* FOOTER */
+    footer {
+      background: #111;
+      color: #aaa;
+      padding: 3rem 5%;
+      margin-top: 4rem;
+      scroll-margin-top: 70px; /* Add scroll margin for smooth scrolling with fixed header */
+    }
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+    .footer-box {
+      flex: 1 1 250px;
+    }
+    footer h4 {
+      margin-bottom: 1rem;
+      color: #fff;
+    }
+    .newsletter input {
+      padding: 0.5rem;
+      width: 70%;
+      margin-right: 0.5rem;
+      border-radius: 5px;
+      border: none;
+    }
+    .newsletter button {
+      padding: 0.5rem 1rem;
+      background: #e67e22;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      cursor: pointer;
+    }
+    footer .bottom-text {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.8rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      .hero h1 {
+        font-size: 2rem;
+      }
+      .products h2 {
+        font-size: 2rem;
+      }
+    }
+	
+	/* SECTION FOR PRODUCT CATEGORIES */
+.product-categories {
+  padding: 4rem 5%;
+  background: #f4f4f4;
+  text-align: center;
+}
+
+.product-categories h2 {
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  color: #333;
+}
+
+/* GRID LAYOUT FOR CATEGORIES */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.category-tile {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(50px);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.category-tile h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.category-tile p {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 1rem;
+}
+
+.category-tile ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+.category-tile ul li {
+  margin: 0.5rem 0;
+}
+
+.category-tile:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+/* ANIMATION FOR TILE APPEARANCE */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.category-tile.food-tile {
+  animation: fadeInUp 1s ease-out forwards 0.3s;
+}
+
+.category-tile.pharma-tile {
+  animation: fadeInUp 1s ease-out forwards 0.6s;
+}
+
+.category-tile.nonfood-tile {
+  animation: fadeInUp 1s ease-out forwards 0.9s;
+}
+
+@media (max-width: 768px) {
+  .product-categories h2 {
+    font-size: 2rem;
+  }
+  .category-tile h3 {
+    font-size: 1.5rem;
+  }
+  .category-tile p {
+    font-size: 1rem;
+  }
+  .category-tile ul li {
+    font-size: 0.9rem;
+  }
+}
+/* Adding Hover Details */
+.category-tile ul li {
+  position: relative;
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.category-tile ul li .details {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #f9f9f9;
+  padding: 1rem;
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-size: 0.9rem;
+      color: orange;
+    background-color: #555;
+    z-index: 99999;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.category-tile ul li:hover .details {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optional: Styling the hover effect */
+.category-tile ul li:hover {
+  background-color: #f1f1f1;
+  border-radius: 8px;
+}
+
+/* Add smooth scrolling for the entire page */
+html {
+  scroll-behavior: smooth;
+}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="Reveal Automation & Controls">
+  </div>
+  <div class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <nav id="nav">
+    <a href="#" onclick="scrollToTop()">Home</a>
+    <a href="#products" onclick="scrollToSection('products')">Products</a>
+    <a href="#footer" onclick="scrollToSection('footer')">About Us</a>
+    <a href="#footer" onclick="scrollToSection('footer')">Contact</a>
+    <a href="#" class="enquire-btn">Enquire Now</a>
+  </nav>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#" onclick="scrollToTop(); closeMobileNav();">Home</a>
+  <a href="#products" onclick="scrollToSection('products'); closeMobileNav();">Products</a>
+  <a href="#footer" onclick="scrollToSection('footer'); closeMobileNav();">About Us</a>
+  <a href="#footer" onclick="scrollToSection('footer'); closeMobileNav();">Contact</a>
+  <a href="#" class="enquire-btn">Enquire Now</a>
+</div>
+
+<section class="hero">
+  <img src="logo.png" alt="Packaging Machine">
+  <h1>Reveal Automation & Controls</h1>
+  <button onclick="scrollToSection('products')">Explore Products</button>
+</section>
+
+<section class="products" id="products">
+  <h2>Our Products</h2>
+  <div class="product-grid">
+    <div class="product-card">
+      <img src="Machines/SP-200_Packaging_Machine_with_4_Head_Weigher.png" alt="SP-200 Packaging Machine with 4 Head Weigher">
+      <h3>SP-200 Packaging Machine with 4 Head Weigher</h3>
+      <p class="details">Advanced packaging machine with multi-head weighing system.</p>      
+    </div>
+    <div class="product-card">
+      <img src="Machines/SP-200_with_Multi_Head_Weigher.png" alt="SP-200 with Multi Head Weigher">
+      <h3>SP-200 with Multi Head Weigher</h3>
+      <p class="details">Efficient multi-head weigher packaging machine for various products.</p>      
+    </div>
+    <div class="product-card">
+      <img src="Machines/SP-200_with_Servo_Auger_Filler_Machine.png" alt="SP-200 with Servo Auger Filler Machine">
+      <h3>SP-200 with Servo Auger Filler Machine</h3>
+      <p class="details">Servo-controlled auger filler machine for high-precision filling.</p>      
+    </div>
+    <div class="product-card">
+      <img src="Machines/SP-250_Cup_Filler_Packaging_Machine.png" alt="SP-250 Cup Filler Packaging Machine">
+      <h3>SP-250 Cup Filler Packaging Machine</h3>
+      <p class="details">Cup filler machine for precise and efficient packaging.</p>      
+    </div>
+    <div class="product-card">
+      <img src="Machines/SP-250_Multi_Head_Weigher.png" alt="SP-250 Multi Head Weigher">
+      <h3>SP-250 Multi Head Weigher</h3>
+      <p class="details">Multi-head weigher for accurate and rapid product packaging.</p>      
+    </div>
+    <div class="product-card">
+      <img src="Machines/SP-250_Servo_Auger_Filler.png" alt="SP-250 Servo Auger Filler">
+      <h3>SP-250 Servo Auger Filler</h3>
+      <p class="details">Auger filler for high-accuracy powder and granular filling.</p>      
+    </div>
+    <div class="product-card">
+      <img src="Machines/SP-400_with_Multi_Head_Filler.png" alt="SP-400 with Multi Head Filler">
+      <h3>SP-400 with Multi Head Filler</h3>
+      <p class="details">Heavy-duty multi-head filler for large-scale packaging operations.</p>      
+    </div>
+    <div class="product-card">
+      <img src="Machines/Servo_Auger_Filler.png" alt="Servo Auger Filler">
+      <h3>Servo Auger Filler</h3>
+      <p class="details">Heavy-duty multi-head filler for large-scale packaging operations.</p>      
+    </div>
+    <div class="product-card">
+      <img src="Machines/Auger_Filling_Feed_Bag_Filling_Machine.png" alt="Auger Filling Feed Bag Filling Machine">
+      <h3>Auger Filling Feed Bag Filling Machine</h3>
+      <p class="details">Heavy-duty multi-head filler for large-scale packaging operations.</p>      
+    </div>
+  </div>
+</section>
+<section class="product-categories">
+  <h2>Our Product Categories</h2>
+  <div class="category-grid">
+    <!-- Food Category -->
+    <div class="category-tile food-tile">
+      <h3>Food</h3>
+      <p>Explore a wide range of packaging solutions for various food products including snacks, beverages, and more.</p>
+      <ul>
+        <li>
+          Snacks & Namkeen Packaging Machine
+          <div class="details">Perfect for packing snacks and namkeen with high efficiency and precision.</div>
+        </li>
+        <li>
+          Ready-to-Eat Food Packaging Machine
+          <div class="details">Ideal for ready-to-eat food items, ensuring long shelf-life and secure packaging.</div>
+        </li>
+        <li>
+          Grains & Seeds Packaging Machine
+          <div class="details">Designed for accurate packaging of grains, seeds, and other similar products.</div>
+        </li>
+        <li>
+          Milk & Liquids Packaging Machine
+          <div class="details">Precision-engineered for packaging milk and liquid products, ensuring hygiene and quality.</div>
+        </li>
+        <li>
+          Powder Packaging Machine
+          <div class="details">Ideal for packing powders such as flour, sugar, and spices.</div>
+        </li>
+        <li>
+          Spice Packaging Machine
+          <div class="details">Specialized packaging for a wide range of spices, offering freshness and flavor protection.</div>
+        </li>
+        <li>
+          Coffee Packaging Machine
+          <div class="details">Designed to maintain the freshness of coffee beans and ground coffee.</div>
+        </li>
+        <li>
+          Sugar Packaging Machine
+          <div class="details">Efficient and hygienic solution for packaging sugar in different forms.</div>
+        </li>
+        <li>
+          Oil Packaging Machine
+          <div class="details">Precise packaging for edible oils, ensuring safety and ease of use.</div>
+        </li>
+        <li>
+          Salt Packaging Machine
+          <div class="details">Perfect for packaging salt with great accuracy and sealing strength.</div>
+        </li>
+        <li>
+          Tea Packaging Machine
+          <div class="details">Keeps tea leaves fresh with its advanced packaging technology.</div>
+        </li>
+      </ul>
+    </div>
+    
+    <!-- Pharma Category -->
+    <div class="category-tile pharma-tile">
+      <h3>Pharma</h3>
+      <p>Precision and accuracy in pharmaceutical packaging for tablets, capsules, injectables, and more.</p>
+      <ul>
+        <li>
+          Tablets
+          <div class="details">Machines designed to handle high-speed and precise tablet packaging.</div>
+        </li>
+        <li>
+          Capsules
+          <div class="details">Ensure accurate filling and sealing of capsules for pharmaceuticals.</div>
+        </li>
+        <li>
+          Granulation
+          <div class="details">High-precision granulation machines for pharmaceutical powders.</div>
+        </li>
+        <li>
+          Oral Liquid Dosage
+          <div class="details">Automated filling of oral liquids with high precision.</div>
+        </li>
+        <li>
+          Ophthalmic and ENT
+          <div class="details">Packaging machines specialized for ophthalmic and ENT products.</div>
+        </li>
+        <li>
+          Injectables
+          <div class="details">Machines designed for packaging injectable products under sterile conditions.</div>
+        </li>
+        <li>
+          Gels
+          <div class="details">Efficient packaging solutions for pharmaceutical gels and ointments.</div>
+        </li>
+        <li>
+          Oral Dosage Powder
+          <div class="details">Ideal for packaging powders used in oral dosages.</div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Non-Food Category -->
+    <div class="category-tile nonfood-tile">
+      <h3>Non-Food</h3>
+      <p>Comprehensive packaging solutions for various non-food industries including chemicals, pet foods, and more.</p>
+      <ul>
+        <li>
+          Agrochemicals
+          <div class="details">Packaging solutions for agrochemicals with safety and precision.</div>
+        </li>
+        <li>
+          Fertilizer
+          <div class="details">Durable packaging machines for various fertilizer types.</div>
+        </li>
+        <li>
+          Adhesives
+          <div class="details">Ensures secure and leak-proof packaging for adhesive products.</div>
+        </li>
+        <li>
+          Lube Oil, Varnishes, Coolants
+          <div class="details">Packaging machines designed for oils, coolants, and varnishes.</div>
+        </li>
+        <li>
+          Paint Powder
+          <div class="details">Efficient packaging of paint powders with high accuracy.</div>
+        </li>
+        <li>
+          Hardware
+          <div class="details">Ideal packaging solutions for hardware items such as nuts and bolts.</div>
+        </li>
+        <li>
+          Pet Foods
+          <div class="details">Packaging machines tailored for pet food products with hygienic standards.</div>
+        </li>
+        <li>
+          Cement & Wall Putty
+          <div class="details">Robust machines for packaging cement and wall putty.</div>
+        </li>
+        <li>
+          Dyes and Pigments
+          <div class="details">Secure and efficient packaging for dyes and pigments in various industries.</div>
+        </li>
+        <li>
+          Foundry, Flux and Inoculants
+          <div class="details">Machines designed for packaging foundry flux and inoculants.</div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+
+<footer id="footer">
+  <div class="footer-content">
+    <div class="footer-box">
+      <h4>Contact Us</h4>
+      <p>Reveal Automation & Controls</p>
+      <p>Shop no 15, A Wing, Green Vision, Alandi, Pune, India</p>
+      <p>Phone: +91-9168421046</p>
+    </div>
+    <div class="footer-box">
+      <h4>Quick Links</h4>
+      <p><a href="#" onclick="scrollToTop()">Home</a></p>
+      <p><a href="#products" onclick="scrollToSection('products')">Products</a></p>
+      <p><a href="#footer" onclick="scrollToSection('footer')">About Us</a></p>
+      <p><a href="#footer" onclick="scrollToSection('footer')">Contact</a></p>
+    </div>
+    <div class="footer-box">
+      <h4>Newsletter</h4>
+      <div class="newsletter">
+        <input type="email" placeholder="Your Email">
+        <button>Subscribe</button>
+      </div>
+    </div>
+  </div>
+  <p class="bottom-text">© 2025 Reveal Automation & Controls. All rights reserved.</p>
+</footer>
+
+<script>
+  const hamburger = document.getElementById('hamburger');
+  const mobileNav = document.getElementById('mobileNav');
+
+  hamburger.addEventListener('click', () => {
+    mobileNav.classList.toggle('active');
+  });
+  
+  // Function to scroll to specific sections
+  function scrollToSection(sectionId) {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  
+  // Function to scroll to top
+  function scrollToTop() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
+  
+  // Function to close mobile nav after clicking
+  function closeMobileNav() {
+    mobileNav.classList.remove('active');
+  }
+  
+  // Make explore products button scroll to products section
+  document.querySelector('.hero button').addEventListener('click', () => {
+    scrollToSection('products');
+  });
+</script>
+
+</body>
+</html>

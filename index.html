@@ -1,672 +1,704 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reveal Automation & Controls</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    /* Global Styles */
+    :root {
+      --primary: #0056b3;
+      --secondary: #333333;
+      --accent: #e67e22;
+      --light: #f8f9fa;
+      --dark: #212529;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      line-height: 1.6;
+      color: var(--secondary);
+      background: #f4f4f4;
+    }
+    
+    .container {
+      width: 90%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 15px;
+    }
+    
+    .btn {
+      display: inline-block;
+      background-color: var(--accent);
+      color: white;
+      padding: 12px 30px;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #d35400;
+    }
 
-    <!-- Bootstrap CSS -->
+    /* HEADER - From Second Code */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: #000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 5%;
+      z-index: 1000;
+      animation: slideDown 0.7s ease forwards;
+    }
+    @keyframes slideDown {
+      from { transform: translateY(-100%); }
+      to { transform: translateY(0); }
+    }
+    .logo img {
+      height: 50px;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+    nav a {
+      color: #fff;
+      font-weight: 500;
+      padding: 0.5rem 0.8rem;
+      transition: background 0.3s, transform 0.3s;
+    }
+    nav a:hover {
+      background: #333;
+      border-radius: 5px;
+      transform: scale(1.1);
+    }
+    .enquire-btn {
+      background: #e67e22;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: 600;
+    }
 
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    /* Hamburger for Mobile */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 5px;
+    }
+    .hamburger div {
+      width: 25px;
+      height: 3px;
+      background: white;
+      transition: all 0.3s;
+    }
+    .mobile-nav {
+      display: none;
+      flex-direction: column;
+      background: #111;
+      width: 100%;
+      text-align: center;
+      overflow: hidden;
+    }
+    .mobile-nav a {
+      padding: 1rem;
+      border-top: 1px solid #333;
+      color: white;
+    }
+    .mobile-nav a:hover {
+      background: #222;
+    }
+    .mobile-nav.active {
+      display: flex;
+      animation: fadeIn 0.5s ease forwards;
+    }
 
-    <link rel="stylesheet" href="css/framework.css">
+    /* HERO - From Second Code */
+    .hero {
+      padding: 7rem 2rem 4rem;
+      text-align: center;
+      background: linear-gradient(135deg, #1e1e1e, #3c3c3c);
+      color: white;
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    .hero img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      animation: fadeIn 1.5s ease-in-out forwards;
+    }
+    .hero h1 {
+      margin-top: 2rem;
+      font-size: 2.5rem;
+      animation: fadeInUp 1s ease forwards;
+    }
+    .hero button {
+      margin-top: 1.5rem;
+      padding: 0.8rem 2rem;
+      background: #e67e22;
+      border: none;
+      color: white;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.3s;
+    }
+    .hero button:hover {
+      background: #d35400;
+      transform: scale(1.05);
+    }
 
+    /* Animation */
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-    <link rel="stylesheet" href="css/style.min.css?ver=11.4">
+    /* PRODUCTS - From First Code */
+    .products {
+      padding: 0.5rem 0;
+      background: #fff;
+    }
+    
+    .section-title {
+      text-align: center;
+      margin: 60px 0 40px;
+    }
+    
+    .section-title h2 {
+      font-size: 32px;
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    
+    .section-title p {
+      color: var(--secondary);
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+      margin-bottom: 60px;
+    }
 
-    <link rel="icon" href="images/favicon.png" type="image/png">
+      .product-card {
+          background-color: white;
+          border-radius: 8px;
+          overflow: hidden;
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          transition: transform 0.3s, box-shadow 0.3s;
+          display: flex;
+          flex-direction: column; /* Stack content vertically */
+          height: 100%; /* Ensure all cards have the same height */
+      }
 
-    <!-- jQuery -->
-    <script src="js/jquery.min.js"></script>
+          .product-card:hover {
+              transform: translateY(-10px);
+              box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+          }
 
-    <!-- Lightbox CSS & JS -->
-    <script type="text/javascript" src="js/lightbox/source/jquery.fancybox.js?v=2.1.5"></script>
+      .product-img {
+          height: 200px;
+          background-color: #eee;
+          background-size: cover;
+          background-position: center;
+      }
 
-    <link rel="stylesheet" type="text/css" href="js/lightbox/source/jquery.fancybox.css?v=2.1.5" media="screen">
+      .product-info {
+          padding: 20px;
+          display: flex;
+          flex-direction: column;
+          flex-grow: 1; /* Allow this to take up remaining space */
+          justify-content: space-between; /* Push content to top and bottom */
+      }
 
-    <!-- Quick Scroll CSS -->
-    <style>
-        /* Sticky header style */
-        header#header-area {
-            position: sticky;
-            top: 0; /* Stick the header to the top */
-            z-index: 9999; /* Make sure it's above all other content */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Optional shadow for a subtle effect */
-        }
+          .product-info h3 {
+              font-size: 20px;
+              margin-bottom: 10px;
+              color: var(--primary);
+          }
 
-        /* Slide-up animation for sections */
-        .slide-up {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.5s ease, transform 0.5s ease;
-        }
+          .product-info p {
+              color: #666;
+              margin-bottom: 15px;
+          }
 
-            .slide-up.visible {
-                opacity: 1;
-                transform: translateY(0);
-            }
-    </style>
+          .product-info a.btn {
+              align-self: flex-start; /* Align button to the left */
+              margin-top: auto; /* Push button to the bottom */
+          }
 
-    <!-- jQuery Smooth Scroll and Section Reveal Animation -->
-    <script>
-        $(document).ready(function () {
-            // Ensure page loads at the top
-            $(window).scrollTop(0); // Scroll to the top of the page on reload
+    /* ABOUT - From First Code */
+    .about {
+      background-color: var(--light);
+      padding: 60px 0;
+    }
+      .explore-button {
+          display: inline-block;
+          margin-top: 1.5rem;
+          padding: 0.8rem 2rem;
+          background: #e67e22;
+          border: none;
+          color: white;
+          font-size: 1rem;
+          border-radius: 5px;
+          cursor: pointer;
+          text-decoration: none;
+          font-weight: 600;
+          transition: background 0.3s, transform 0.3s;
+      }
 
-            // Quick Scroll
-            $("a[href^='#']").on('click', function (e) {
-                e.preventDefault();
-                var target = this.hash;
-                var $target = $(target);
-                $('html, body').stop().animate({
-                    scrollTop: $target.offset().top
-                }, 500);  // Reduced the scroll time to 500ms for quicker action
-            });
+          .explore-button:hover {
+              background: #d35400;
+              transform: scale(1.05);
+          }
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+    }
+    
+    .about-img {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .about-img img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    
+    .about-text h2 {
+      font-size: 32px;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    
+    .about-text p {
+      margin-bottom: 15px;
+    }
 
-            // Slide-up animation when sections are scrolled into view
-            $(window).on('scroll', function () {
-                $('.slide-up').each(function () {
-                    var elementTop = $(this).offset().top;
-                    var windowBottom = $(window).scrollTop() + $(window).height();
-                    if (windowBottom > elementTop) {
-                        $(this).addClass('visible');
-                    }
-                });
-            });
+    /* CONTACT - From First Code */
+    .contact {
+      padding: 10px 0;
+    }
+    
+    .contact-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+    }
+    
+    .contact-info h3 {
+      font-size: 24px;
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+    
+    .contact-info p {
+      margin-bottom: 15px;
+    }
+    
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+    }
+    
+    .contact-form textarea {
+      height: 120px;
+    }
 
-            // Trigger the scroll event on load to apply the animation immediately if elements are in view
-            $(window).trigger('scroll');
-        });
-    </script>
+    /* FOOTER - From First Code */
+    footer {
+      background-color: var(--dark);
+      color: white;
+      padding: 40px 0 20px;
+    }
+    
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      margin-bottom: 30px;
+    }
+    
+    .footer-col h3 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
+    
+    .footer-col ul {
+      list-style: none;
+    }
+    
+    .footer-col ul li {
+      margin-bottom: 10px;
+    }
+    
+    .footer-col ul li a {
+      color: #bbb;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+    
+    .footer-col ul li a:hover {
+      color: white;
+    }
+    
+    .copyright {
+      text-align: center;
+      padding-top: 20px;
+      border-top: 1px solid #444;
+      color: #bbb;
+      font-size: 14px;
+    }
 
+    /* Responsive */
+    @media (max-width: 768px) {
+      /* Header */
+      nav {
+        display: none;
+      }
+      .hamburger {
+        display: flex;
+      }
+      
+      /* About */
+      .about-content,
+      .contact-container {
+        grid-template-columns: 1fr;
+      }
+      
+      /* Footer */
+      .footer-container {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      /* Hero */
+      .hero h1 {
+        font-size: 2rem;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      /* Products */
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      /* Footer */
+      .footer-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
 <body>
 
-
-    <div class="scrollToTop" style="display: none;"><i class="fa fa-chevron-up fa-2x"></i></div>
-
-    <div style="opacity: 0;" class=" blackscreen"></div>
-
-
-    <div class="main-page-wrapper">
-
-
-        <header id="header-area" class="header fixed">
-
-            <div class="top-header">
-
-                <div class="container">
-
-                    <div class="row">
-
-                        <div class="col-md-12">
-
-                            <div class="right-side-menu d-lg-block d-xl-none d-sm-none d-none">
-
-                                <ul>
-
-                                    <li><a href="" class="btn-enquire-now">Enquire Now</a></li>
-
-                                    <li class="search">
-
-                                        <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-search"></i></a>
-
-                                        <ul class="dropdown-menu dropdown-menu-right dropdown-animation">
-
-                                            <li class="px-3 py-2">
-
-                                                <form role="search" class="search-box" action="" method="get">
-
-                                                    <div class="form-group has-feedback">
-
-                                                        <input type="text" class="form-control" name="q" placeholder="Search">
-
-                                                    </div>
-
-                                                </form>
-
-                                            </li>
-
-                                        </ul>
-
-                                    </li>
-
-                                    <li class="resource">
-
-                                        <div class="dropdown">
-
-                                            <a class="dropdown-toggle naicon" id="dropdownMenuLink" data-toggle="dropdown"><i class="fa fa-navicon"></i></a>
-
-                                            <ul class="dropdown-menu resources" aria-labelledby="dropdownMenuLink">
-
-                                                <li><a href="">Blog</a></li>
-
-                                                <li><a href="">News &amp; Exhibition</a></li>
-
-                                            </ul>
-
-
-
-                                        </div>
-
-                                    </li>
-
-                                </ul>
-
-                            </div>
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-
-            <nav class="main-menu navbar navbar-expand-lg navbar-light bg-faded">
-
-                <div class="container">
-
-                    <a class="navbar-brand" href=""><img src="images/logo.png" class="img-fluid" alt="Nichrome India Ltd"></a>
-
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar2" aria-controls="navbar2" aria-expanded="false" aria-label="Toggle navigation">
-
-                        <span class="navbar-toggler-icon"></span>
-
-                    </button>
-
-                    <div id="navbar" class=" dcjq-mega-menu collapse d-lg-block d-xl-block d-sm-none" aria-expanded="false">
-
-                        <ul id="main-menu" class="sm sm-blue " data-smartmenus-id="17424192021051746">
-
-                            <li><a href="#">Home</a></li>
-
-                            <li><a href="#packaging-machines">Products</a></li>
-                            <li><a href="#contact-us">About Us</a></li>
-
-                        </ul>
-                    </div>
-
-                    <div class="right-side-menu d-lg-none d-xl-block d-sm-none d-none">
-
-                        <ul>
-
-                            <li><a href="" class="btn-enquire-now">Enquire Now</a></li>
-
-
-                            <li class="resource">
-
-                                <div class="dropdown">
-
-                                    <a class="dropdown-toggle naicon" id="dropdownMenuLink" data-toggle="dropdown"><i class="fa fa-navicon"></i></a>
-
-                                    <ul class="dropdown-menu resources" aria-labelledby="dropdownMenuLink">
-
-                                        <li><a href="">Service and Spares</a></li>
-
-                                        <li><a href="">Blog</a></li>
-
-                                        <li><a href="">Brand Gallery</a></li>
-
-                                    </ul>
-
-
-
-                                </div>
-
-                            </li>
-                            <!--  <ul class="social-icons">
-
-                                  <li><a href="https://www.facebook.com/Nichrome-India-Ltd-235216006816764/?ref=hl" class="fa fa-facebook" target="_blank"><span class="d-none">facebook</span></a></li>
-
-                                  <li><a href="https://in.linkedin.com/company/nichrome-india-ltd." class="fa fa-linkedin" target="_blank"><span class="d-none">LinkedIn</span></a></li>
-
-                                  <li><a href="https://www.youtube.com/channel/UCIZr2Iue_47ZUVsIq9uaYcA" class="fa fa-youtube-play" target="_blank"><span class="d-none">Youtube</span></a></li>
-
-                              </ul>-->
-                        </ul>
-
-                    </div>
-
-                </div>
-
-            </nav>
-
-        </header>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-
-        <section class="machine-container slide-up" id="packaging-machines" data-aos="fade-up">
-            <div class="container">
-                <!-- SLIDESHOW START -->
-                <div id="product-slideshow" class="carousel slide mb-4" data-bs-ride="carousel" data-bs-interval="4000">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="images/Machines/SP-200 with Servo Auger Filler Machine.jpeg" class="d-block w-100" alt="Slide 1" loading="lazy">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="images/Machines/SP-200 with Multi Head Weigher.jpeg" class="d-block w-100" alt="Slide 2" loading="lazy">
-                        </div>
-                        <div class="carousel-item">
-                            <img src="images/Machines/SP-250 Servo Auger Filler.jpeg" class="d-block w-100" alt="Slide 3" loading="lazy">
-                        </div>
-                    </div>
-                     
-                </div>
-
-            </div>
-            <!-- SLIDESHOW END -->
-
-            <div class="Header"> <h1>PRODUCTS</h1></div>
-
-            <div class="container">
-                <div class="row ">
-
-                    <div class="col-xl-9 col-lg-9 col-md-12">
-                        <div class="machines-sub-category-content">
-                            <div class="row">
-
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid">
-                                    <a href="../../machines/vffs-machines/dh-wing-servo-auger-filler.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/SP-200 with Servo Auger Filler Machine.jpeg" class="img-responsive" alt="SP-200 with Servo Auger Filler Machine">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">SP-200 with Servo Auger Filler Machine </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid">
-                                    <a href="../../machines/vffs-machines/vffs-stickpack.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/SP-200 with Multi Head Weigher.jpeg" class="img-responsive" alt="SP-200 with Multi Head Weigher">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">SP-200 with Multi Head Weigher </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid">
-                                    <a href="../../machines/vffs-machines/e-line-wing-200.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/SP-200 Packaging Machine with 4 Head Weigher.jpeg" class="img-responsive" alt="SP-200 Packaging Machine with 4 Head Weigher">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">SP-200 Packaging Machine with 4 Head Weigher </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid">
-                                    <a href="../../machines/vffs-machines/maxima200.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/SP-250 Multi Head Weigher.jpeg" class="img-responsive" alt="SP-250 Multi Head Weigher">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">SP-250 Multi Head Weigher </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid">
-                                    <a href="../../machines/vffs-machines/maxima400.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/SP-250 Cup Filler Packaging Machine.jpeg" class="img-responsive" alt="SP-250 Cup Filler Packaging Machine">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">SP-250 Cup Filler Packaging Machine </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid">
-                                    <a href="../../machines/vffs-machines/vffs-sprint-250-plus-servo-auger.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/SP-250 Servo Auger Filler.jpeg" class="img-responsive" alt="SP-250 Servo Auger Filler">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">SP-250 Servo Auger Filler</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid ">
-                                    <a href="../../machines/vffs-machines/vffs-sprint-250-plus-multihead-weigher.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/SP-400 with Multi Head Filler.jpeg" class="img-responsive" alt="SP-400 with Multi Head Filler">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">SP-400 with Multi Head Filler</h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid">
-                                    <a href="../../machines/vffs-machines/vffs-sprint-250-plus-intelligent-electronic-weigh-filler.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/Servo Auger Filler.jpeg" class="img-responsive" alt="Servo Auger Filler">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">Servo Auger Filler </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid">
-                                    <a href="../../machines/vffs-machines/vffs-sprint-250-plus-cup-filler.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/Electronic Filler.jpeg" class="img-responsive" alt="Electronic Filler">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">Electronic Filler </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-
-                                <div class="col-sm-6 col-md-4 isotope-item VFFS-MACHINES Solid">
-                                    <a href="../../machines/vffs-machines/excel-vertipack-320.php">
-                                        <div class="card">
-                                            <div class="">
-                                                <h4 class="machine-name"></h4>
-                                            </div>
-                                            <img src="images/Machines/Auger Filling Feed Bag Filling Machine.jpeg" class="img-responsive" alt="Auger Filling Feed Bag Filling Machine">
-                                            <div class="overlay-machine-info">
-                                                <div class="machine-info-content d-flex align-items-center">
-                                                    <h4 class="machine-name">Auger Filling Feed Bag Filling Machine </h4>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class=" brand-cat" data-aos="fade-up">
-
-            <div class="container">
-
-                <div class="row row-eq-height d-flex">
-
-                    <div class=" three-brand food">
-
-                        <div class=" food-content white">
-
-                            <h3>Food</h3>
-
-                            <ul>
-
-                                <li><a href="">Snacks &amp; Namkeen Packaging Machine</a></li>
-
-                                <li><a href="">Ready-to-Eat Food Packaging Machine</a></li>
-
-                                <li><a href="">Grains &amp; Seeds Packaging Machine</a></li>
-
-                                <li><a href="">Milk &amp; liquids Packaging Machine</a></li>
-
-                                <li><a href="">Powder Packaging Machine</a></li>
-
-                                <li><a href="">Spice Packaging Machine</a></li>
-
-                                <li><a href="">Coffee Packaging Machine</a></li>
-
-                                <li><a href="">Sugar Packaging Machine</a></li>
-
-                                <li><a href="">Oil Packaging Machine</a></li>
-
-                                <li><a href="">Salt Packaging Machine</a></li>
-
-                                <li><a href="">Tea Packaging Machine</a></li>
-
-                            </ul>
-
-                        </div>
-                    </div>
-
-                    <div class=" three-brand pharma d-flex  ">
-
-                        <div class="ml-5 px-5 white mx-auto">
-
-                            <h3>Pharma</h3>
-
-                            <ul>
-
-                                <li><a href="">Tablets</a></li>
-
-                                <li><a href="">Capsules</a></li>
-
-                                <li><a href="">Granulation</a></li>
-
-                                <li><a href="">Oral Liquid Dosage</a></li>
-
-                                <li><a href="">Ophthalmic and Ent</a></li>
-
-                                <li><a href="">Injectables</a></li>
-
-                                <li><a href="">Gels</a></li>
-
-                                <li><a href="">Oral Dosage Powder</a></li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                    <div class=" three-brand other ">
-
-                        <div class=" white">
-
-                            <h3>Non Food</h3>
-
-                            <ul>
-
-                                <li><a href="">Agrochemicals</a></li>
-
-                                <li><a href="">Fertilizer</a></li>
-
-                                <li><a href="">Adhesives </a></li>
-
-                                <li><a href="">Lube oil, Varnishes, Coolants</a></li>
-
-                                <li><a href="">Paint powder</a></li>
-
-                                <li><a href="">Hardware</a></li>
-
-                                <li><a href="">Pet foods</a></li>
-
-                                <li><a href="">Cement &amp; wall putty</a></li>
-
-                                <li><a href="">Dyes and pigments</a></li>
-
-                                <li><a href="">Foundry, Flux and Inoculants</a></li>
-
-                            </ul>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="backshade">
-
-                <div class="d-flex h-100">
-
-                    <div class="w-50 h-100 food-color">
-
-
-
-                    </div>
-
-                    <div class="w-50 h-100 other-color">
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- footer start (Add "light" class to #footer in order to enable light footer) -->
-        <!-- ================ -->
-
-        <section class="footer white slide-up" id="contact-us">
-
-            <div class="container">
-
-                <div class="row">
-
-                    <div class="footer-title">
-
-                        <h1 class="footer-title">Contact Us</h1>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="container pb-4">
-
-                <div class="row">
-
-                    <div class="col-lg-4">
-
-                        <p class="mb-0 footer-head">Head office</p>
-
-                        <p class="mb-0"> Reveal Automation & Controls.<br>Shop no.19 A wing Jai Ganesh Vision Akurdi.<br>Pune 411035 Maharashtra India</p>
-
-                        <p class="mb-0">Tel: +91-9156210405</p>
-
-                        <br>
-
-                    </div>
-
-                    <div class="col-lg-2">
-
-
-                    </div>
-
-                    <div class="col-lg-2">
-
-
-
-                    </div>
-
-                    <div class="col-lg-4 ">
-
-                        <div class="text-left   ">
-
-                            <form action="" method="post" class="">
-
-                                <input type="text" name="subscription" class="subscribe-control " placeholder="Email Subscription"><input type="submit" value="Subscribe" class="subscribe-btn">
-
-                            </form>
-
-                            <img src="/images/V10/footer-logo-01.png" class="img-fluid" alt="Dairy &amp; milk packaging machine">
-
-                            <div class="social">
-
-                                <ul class="social-links dark circle d-inline">
-
-                                    <!--<li><a target="_blank" href="https://in.linkedin.com/company/nichrome-india-ltd."><i class="fa fa-linkedin"></i></a></li>
-
-                                    <li><a target="_blank" href="https://www.facebook.com/Nichrome-India-Ltd-235216006816764/?ref=hl"><i class="fa fa-facebook"></i></a></li>-->
-                                    <!--<li><a target="_blank" href="https://www.twitter.com/"><i class="fa fa-twitter"></i></a></li>-->
-                                    <!--<li><a target="_blank" href="https://www.youtube.com/channel/UCIZr2Iue_47ZUVsIq9uaYcA"><i class="fa fa-youtube"></i></a></li>-->
-
-                                </ul>
-
-                            </div>
-
-
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <div class="w-100 hrrule">
-
-            </div>
-
-            <div class="container py-4 footer-last">
-
-                <div class="row">
-
-                    <div class="col-md-8">
-
-                        <p class="mb-0">Copyright 2024 © Reveal Automation & Controls. All rights reserved. | Site map</p>
-
-                    </div>
-
-                    <div class="col-md-4 text-right">
-
-                        <p class="mb-0">Powered By <a href="https://www.intericsdesigns.com/" target="_blank">Interics Designs</a></p>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </section>
-
-        <!-- footer end -->
-
+<!-- HEADER - From Second Code -->
+<header>
+  <div class="logo">
+    <img src="logo.png" alt="Reveal Automation & Controls">
+  </div>
+  <div class="hamburger" id="hamburger">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <nav id="nav">
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#about">About Us</a>
+    <a href="#contact" class="enquire-btn">Enquire Now</a>
+  </nav>
+</header>
+
+<div class="mobile-nav" id="mobileNav">
+  <a href="#home">Home</a>
+  <a href="#products">Products</a>
+  <a href="#about">About Us</a>
+  <a href="#contact" class="enquire-btn">Enquire Now</a>
+</div>
+
+<!-- HERO - From Second Code -->
+<section class="hero" id="home">
+  <img src="logo.png" alt="Packaging Machine">
+  <h1>Reveal Automation & Controls</h1>
+  <a href="#products" class="explore-button">Explore Our Products</a>
+</section>
+
+<!-- PRODUCTS - From First Code -->
+<section class="products" id="products">
+  <div class="container">
+    <div class="section-title">
+      <h2>Our Packaging Machines</h2>
+      <p>We offer a complete range of packaging machinery solutions for different product types and industries.</p>
     </div>
+    
+    <div class="products-grid">
+      <!-- Product 1 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/SP-200_with_Servo_Auger_Filler_Machine.png');"></div>
+        <div class="product-info">
+          <h3>SP-200 with Servo Auger Filler Machine</h3>                       
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+      
+      <!-- Product 2 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/SP-200_with_Multi_Head_Weigher.png');"></div>
+        <div class="product-info">
+          <h3>SP-200 with Multi Head Weigher</h3>                        
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+      
+      <!-- Product 3 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/SP-200_Packaging_Machine_with_4_Head_Weigher.png');"></div>
+        <div class="product-info">
+          <h3>SP-200 Packaging Machine with 4 Head Weigher</h3>                       
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+      
+      <!-- Product 4 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/SP-250_Multi_Head_Weigher.png');"></div>
+        <div class="product-info">
+          <h3>SP-250 Multi Head Weigher</h3>
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+      
+      <!-- Product 5 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/SP-250_Cup_Filler_Packaging_Machine.png');"></div>
+        <div class="product-info">
+          <h3>SP-250 Cup Filler Packaging Machine</h3>
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+      
+      <!-- Product 6 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/SP-250_Servo_Auger_Filler.png');"></div>
+        <div class="product-info">
+          <h3>SP-250 Servo Auger Filler</h3>
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+      
+      <!-- Product 7 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/SP-400_with_Multi_Head_Filler.png');"></div>
+        <div class="product-info">
+          <h3>SP-400 with Multi Head Filler</h3>
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+      
+      <!-- Product 8 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/Servo_Auger_Filler.png');"></div>
+        <div class="product-info">
+          <h3>Servo Auger Filler</h3>
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+      
+      <!-- Product 9 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/Electronic_Filler.png');"></div>
+        <div class="product-info">
+          <h3>Electronic Filler</h3>
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+      
+      <!-- Product 10 -->
+      <div class="product-card">
+        <div class="product-img" style="background-image: url('Machines/Auger_Filling_Feed_Bag_Filling_Machine.png');"></div>
+        <div class="product-info">
+          <h3>Auger Filling Feed Bag Filling Machine</h3>
+          <a href="#contact" class="btn">Inquire Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div id="c49c316a-ecc7-4ac8-a8f0-3c79a8cb6f4b" class="IN-staging" style="display: none;"></div>
+<!-- ABOUT - From First Code -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-content">
+      <div class="about-img">
+        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Our Factory">
+      </div>
+      <div class="about-text">
+        <h2>About Reveal Automation & Controls</h2>
+        <p>With over 15 years of experience in the packaging industry, Reveal Automation & Controls has established itself as a leading manufacturer and supplier of high-quality packaging machinery.</p>
+        <p>Our mission is to provide innovative, reliable, and cost-effective packaging solutions that help our clients improve efficiency, reduce waste, and enhance product presentation.</p>
+        <p>All our machines are manufactured with premium components and undergo rigorous quality testing to ensure long-term performance and minimal downtime.</p>
+        <a href="#contact" class="btn">Contact Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT - From First Code -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="section-title">
+      <h2>Get In Touch</h2>
+      <p>Have questions about our packaging machines? Contact our sales team for more information and quotes.</p>
+    </div>
+    
+    <div class="contact-container">
+      <div class="contact-info">
+        <h3>Contact Information</h3>
+        <p><strong>Address:</strong> Shop no 15, A Wing, Green Vision, Alandi, Pune, India</p>
+        <p><strong>Phone:</strong> +91-9168421046</p>
+        <p><strong>Email:</strong> sales@revealautomation.com</p>
+        <p><strong>Hours:</strong> Mon-Fri: 9AM - 6PM</p>
+      </div>
+      
+      <div class="contact-form">
+        <form>
+          <input type="text" placeholder="Your Name" required>
+          <input type="email" placeholder="Your Email" required>
+          <input type="tel" placeholder="Phone Number">
+          <select>
+            <option value="">Select Machine Type</option>
+            <option>SP-200 with Servo Auger Filler Machine</option>
+            <option>SP-200 with Multi Head Weigher</option>
+            <option>SP-200 Packaging Machine with 4 Head Weigher</option>
+            <option>SP-250 Multi Head Weigher</option>
+            <option>SP-250 Cup Filler Packaging Machine</option>
+            <option>SP-250 Servo Auger Filler</option>
+            <option>SP-400 with Multi Head Filler</option>
+            <option>Servo Auger Filler</option>
+            <option>Electronic Filler</option>
+            <option>Auger Filling Feed Bag Filling Machine</option>
+          </select>
+          <textarea placeholder="Your Message"></textarea>
+          <button type="submit" class="btn">Send Inquiry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER - From First Code -->
+<footer>
+  <div class="container">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h3>Reveal Automation & Controls</h3>
+        <p>Leading manufacturer of packaging machinery for food and industrial applications since 2005.</p>
+      </div>
+      
+      <div class="footer-col">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      
+      
+      <div class="footer-col">
+        <h3>Connect With Us</h3>
+        <ul>
+          <li><a href="#">LinkedIn</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Twitter</a></li>
+          <li><a href="#">YouTube</a></li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="copyright">
+      <p>&copy; 2023 Reveal Automation & Controls. All Rights Reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+    // Mobile Navigation Toggle
+    const hamburger = document.getElementById('hamburger');
+    const mobileNav = document.getElementById('mobileNav');
+
+    hamburger.addEventListener('click', () => {
+        mobileNav.classList.toggle('active');
+
+        // Animate hamburger to X
+        hamburger.children[0].style.transform = mobileNav.classList.contains('active') ? 'rotate(45deg) translate(5px, 5px)' : '';
+        hamburger.children[1].style.opacity = mobileNav.classList.contains('active') ? '0' : '1';
+        hamburger.children[2].style.transform = mobileNav.classList.contains('active') ? 'rotate(-45deg) translate(5px, -5px)' : '';
+    });
+
+    // Smooth scrolling for anchor links with offset for fixed header
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+
+            const headerHeight = document.querySelector('header').offsetHeight;
+            const targetElement = document.querySelector(this.getAttribute('href'));
+            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPosition = elementPosition - headerHeight;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+
+            // Close mobile menu if open
+            if (mobileNav.classList.contains('active')) {
+                mobileNav.classList.remove('active');
+                hamburger.children[0].style.transform = '';
+                hamburger.children[1].style.opacity = '1';
+                hamburger.children[2].style.transform = '';
+            }
+        });
+    });
+</script>
 
 </body>
 </html>

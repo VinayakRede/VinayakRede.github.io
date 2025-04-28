@@ -1,704 +1,759 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reveal Automation & Controls</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    /* Global Styles */
-    :root {
-      --primary: #0056b3;
-      --secondary: #333333;
-      --accent: #e67e22;
-      --light: #f8f9fa;
-      --dark: #212529;
-    }
-    
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-    
-    body {
-      line-height: 1.6;
-      color: var(--secondary);
-      background: #f4f4f4;
-    }
-    
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 0 15px;
-    }
-    
-    .btn {
-      display: inline-block;
-      background-color: var(--accent);
-      color: white;
-      padding: 12px 30px;
-      border-radius: 4px;
-      text-decoration: none;
-      font-weight: 600;
-      transition: background-color 0.3s;
-    }
-    
-    .btn:hover {
-      background-color: #d35400;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reveal Automation & Controls</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary: #0056b3;
+            --secondary: #333333;
+            --accent: #e67e22;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
 
-    /* HEADER - From Second Code */
-    header {
-      position: fixed;
-      top: 0;
-      width: 100%;
-      background: #000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0.8rem 5%;
-      z-index: 1000;
-      animation: slideDown 0.7s ease forwards;
-    }
-    @keyframes slideDown {
-      from { transform: translateY(-100%); }
-      to { transform: translateY(0); }
-    }
-    .logo img {
-      height: 50px;
-    }
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-    }
-    nav a {
-      color: #fff;
-      font-weight: 500;
-      padding: 0.5rem 0.8rem;
-      transition: background 0.3s, transform 0.3s;
-    }
-    nav a:hover {
-      background: #333;
-      border-radius: 5px;
-      transform: scale(1.1);
-    }
-    .enquire-btn {
-      background: #e67e22;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      font-weight: 600;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
 
-    /* Hamburger for Mobile */
-    .hamburger {
-      display: none;
-      flex-direction: column;
-      cursor: pointer;
-      gap: 5px;
-    }
-    .hamburger div {
-      width: 25px;
-      height: 3px;
-      background: white;
-      transition: all 0.3s;
-    }
-    .mobile-nav {
-      display: none;
-      flex-direction: column;
-      background: #111;
-      width: 100%;
-      text-align: center;
-      overflow: hidden;
-    }
-    .mobile-nav a {
-      padding: 1rem;
-      border-top: 1px solid #333;
-      color: white;
-    }
-    .mobile-nav a:hover {
-      background: #222;
-    }
-    .mobile-nav.active {
-      display: flex;
-      animation: fadeIn 0.5s ease forwards;
-    }
+        body {
+            line-height: 1.6;
+            color: var(--secondary);
+            background: #f4f4f4;
+        }
 
-    /* HERO - From Second Code */
-    .hero {
-      padding: 7rem 2rem 4rem;
-      text-align: center;
-      background: linear-gradient(135deg, #1e1e1e, #3c3c3c);
-      color: white;
-      min-height: 90vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .hero img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      animation: fadeIn 1.5s ease-in-out forwards;
-    }
-    .hero h1 {
-      margin-top: 2rem;
-      font-size: 2.5rem;
-      animation: fadeInUp 1s ease forwards;
-    }
-    .hero button {
-      margin-top: 1.5rem;
-      padding: 0.8rem 2rem;
-      background: #e67e22;
-      border: none;
-      color: white;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background 0.3s, transform 0.3s;
-    }
-    .hero button:hover {
-      background: #d35400;
-      transform: scale(1.05);
-    }
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
 
-    /* Animation */
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+        .btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
 
-    /* PRODUCTS - From First Code */
-    .products {
-      padding: 0.5rem 0;
-      background: #fff;
-    }
-    
-    .section-title {
-      text-align: center;
-      margin: 60px 0 40px;
-    }
-    
-    .section-title h2 {
-      font-size: 32px;
-      color: var(--primary);
-      margin-bottom: 15px;
-    }
-    
-    .section-title p {
-      color: var(--secondary);
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    
-    .products-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-      gap: 30px;
-      margin-bottom: 60px;
-    }
+            .btn:hover {
+                background-color: #d35400;
+            }
 
-      .product-card {
-          background-color: white;
-          border-radius: 8px;
-          overflow: hidden;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-          transition: transform 0.3s, box-shadow 0.3s;
-          display: flex;
-          flex-direction: column; /* Stack content vertically */
-          height: 100%; /* Ensure all cards have the same height */
-      }
+        /* HEADER - From Second Code */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: #000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+            z-index: 1000;
+            animation: slideDown 0.7s ease forwards;
+        }
 
-          .product-card:hover {
-              transform: translateY(-10px);
-              box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-          }
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+            }
 
-      .product-img {
-          height: 200px;
-          background-color: #eee;
-          background-size: cover;
-          background-position: center;
-      }
+            to {
+                transform: translateY(0);
+            }
+        }
 
-      .product-info {
-          padding: 20px;
-          display: flex;
-          flex-direction: column;
-          flex-grow: 1; /* Allow this to take up remaining space */
-          justify-content: space-between; /* Push content to top and bottom */
-      }
+        .logo img {
+            height: 50px;
+        }
 
-          .product-info h3 {
-              font-size: 20px;
-              margin-bottom: 10px;
-              color: var(--primary);
-          }
+        nav {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
 
-          .product-info p {
-              color: #666;
-              margin-bottom: 15px;
-          }
+            nav a {
+                color: #fff;
+                font-weight: 500;
+                padding: 0.5rem 0.8rem;
+                transition: background 0.3s, transform 0.3s;
+            }
 
-          .product-info a.btn {
-              align-self: flex-start; /* Align button to the left */
-              margin-top: auto; /* Push button to the bottom */
-          }
+                nav a:hover {
+                    background: #333;
+                    border-radius: 5px;
+                    transform: scale(1.1);
+                }
 
-    /* ABOUT - From First Code */
-    .about {
-      background-color: var(--light);
-      padding: 60px 0;
-    }
-      .explore-button {
-          display: inline-block;
-          margin-top: 1.5rem;
-          padding: 0.8rem 2rem;
-          background: #e67e22;
-          border: none;
-          color: white;
-          font-size: 1rem;
-          border-radius: 5px;
-          cursor: pointer;
-          text-decoration: none;
-          font-weight: 600;
-          transition: background 0.3s, transform 0.3s;
-      }
+        .enquire-btn {
+            background: #e67e22;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            font-weight: 600;
+        }
 
-          .explore-button:hover {
-              background: #d35400;
-              transform: scale(1.05);
-          }
-    .about-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-      align-items: center;
-    }
-    
-    .about-img {
-      border-radius: 8px;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-    
-    .about-img img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
-    
-    .about-text h2 {
-      font-size: 32px;
-      color: var(--primary);
-      margin-bottom: 20px;
-    }
-    
-    .about-text p {
-      margin-bottom: 15px;
-    }
+        /* Hamburger for Mobile */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
 
-    /* CONTACT - From First Code */
-    .contact {
-      padding: 10px 0;
-    }
-    
-    .contact-container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 50px;
-    }
-    
-    .contact-info h3 {
-      font-size: 24px;
-      color: var(--primary);
-      margin-bottom: 20px;
-    }
-    
-    .contact-info p {
-      margin-bottom: 15px;
-    }
-    
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 12px;
-      margin-bottom: 15px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-    }
-    
-    .contact-form textarea {
-      height: 120px;
-    }
+            .hamburger div {
+                width: 25px;
+                height: 3px;
+                background: white;
+                transition: all 0.3s;
+            }
 
-    /* FOOTER - From First Code */
-    footer {
-      background-color: var(--dark);
-      color: white;
-      padding: 40px 0 20px;
-    }
-    
-    .footer-container {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-      margin-bottom: 30px;
-    }
-    
-    .footer-col h3 {
-      font-size: 18px;
-      margin-bottom: 20px;
-      color: var(--accent);
-    }
-    
-    .footer-col ul {
-      list-style: none;
-    }
-    
-    .footer-col ul li {
-      margin-bottom: 10px;
-    }
-    
-    .footer-col ul li a {
-      color: #bbb;
-      text-decoration: none;
-      transition: color 0.3s;
-    }
-    
-    .footer-col ul li a:hover {
-      color: white;
-    }
-    
-    .copyright {
-      text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid #444;
-      color: #bbb;
-      font-size: 14px;
-    }
+        .mobile-nav {
+            display: none;
+            flex-direction: column;
+            background: #111;
+            width: 100%;
+            text-align: center;
+            overflow: hidden;
+            position: fixed; /* Changed from default to fixed */
+            top: 68px; /* Height of your header */
+            left: 0;
+            z-index: 999; /* Ensure it's above other content */
+            max-height: calc(100vh - 68px); /* Viewport height minus header */
+            overflow-y: auto; /* Add scrolling if menu is too tall */
+        }
 
-    /* Responsive */
-    @media (max-width: 768px) {
-      /* Header */
-      nav {
-        display: none;
-      }
-      .hamburger {
-        display: flex;
-      }
-      
-      /* About */
-      .about-content,
-      .contact-container {
-        grid-template-columns: 1fr;
-      }
-      
-      /* Footer */
-      .footer-container {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      /* Hero */
-      .hero h1 {
-        font-size: 2rem;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      /* Products */
-      .products-grid {
-        grid-template-columns: 1fr;
-      }
-      
-      /* Footer */
-      .footer-container {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+            .mobile-nav a {
+                padding: 1rem;
+                border-top: 1px solid #333;
+                color: white;
+            }
+
+                .mobile-nav a:hover {
+                    background: #222;
+                }
+
+            .mobile-nav.active {
+                display: flex;
+                animation: fadeIn 0.5s ease forwards;
+            }
+
+        /* HERO - From Second Code */
+        .hero {
+            padding: 7rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, #1e1e1e, #3c3c3c);
+            color: white;
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+            .hero img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 12px;
+                animation: fadeIn 1.5s ease-in-out forwards;
+            }
+
+            .hero h1 {
+                margin-top: 2rem;
+                font-size: 2.5rem;
+                animation: fadeInUp 1s ease forwards;
+            }
+
+            .hero button {
+                margin-top: 1.5rem;
+                padding: 0.8rem 2rem;
+                background: #e67e22;
+                border: none;
+                color: white;
+                font-size: 1rem;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s, transform 0.3s;
+            }
+
+                .hero button:hover {
+                    background: #d35400;
+                    transform: scale(1.05);
+                }
+
+        /* Animation */
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* PRODUCTS - From First Code */
+        .products {
+            padding: 0.5rem 0;
+            background: #fff;
+        }
+
+        .section-title {
+            text-align: center;
+            margin: 60px 0 40px;
+        }
+
+            .section-title h2 {
+                font-size: 32px;
+                color: var(--primary);
+                margin-bottom: 15px;
+            }
+
+            .section-title p {
+                color: var(--secondary);
+                max-width: 700px;
+                margin: 0 auto;
+            }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .product-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column; /* Stack content vertically */
+            height: 100%; /* Ensure all cards have the same height */
+        }
+
+            .product-card:hover {
+                transform: translateY(-10px);
+                box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            }
+
+        .product-img {
+            height: 200px;
+            background-color: #eee;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1; /* Allow this to take up remaining space */
+            justify-content: space-between; /* Push content to top and bottom */
+        }
+
+            .product-info h3 {
+                font-size: 20px;
+                margin-bottom: 10px;
+                color: var(--primary);
+            }
+
+            .product-info p {
+                color: #666;
+                margin-bottom: 15px;
+            }
+
+            .product-info a.btn {
+                align-self: flex-start; /* Align button to the left */
+                margin-top: auto; /* Push button to the bottom */
+            }
+
+        /* ABOUT - From First Code */
+        .about {
+            background-color: var(--light);
+            padding: 60px 0;
+        }
+
+        .explore-button {
+            display: inline-block;
+            margin-top: 1.5rem;
+            padding: 0.8rem 2rem;
+            background: #e67e22;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+            .explore-button:hover {
+                background: #d35400;
+                transform: scale(1.05);
+            }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-img {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+            .about-img img {
+                width: 100%;
+                height: auto;
+                display: block;
+            }
+
+        .about-text h2 {
+            font-size: 32px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .about-text p {
+            margin-bottom: 15px;
+        }
+
+        /* CONTACT - From First Code */
+        .contact {
+            padding: 10px 0;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info h3 {
+            font-size: 24px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            margin-bottom: 15px;
+        }
+
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .contact-form textarea {
+            height: 120px;
+        }
+
+        /* FOOTER - From First Code */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-col h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+            .footer-col ul li {
+                margin-bottom: 10px;
+            }
+
+                .footer-col ul li a {
+                    color: #bbb;
+                    text-decoration: none;
+                    transition: color 0.3s;
+                }
+
+                    .footer-col ul li a:hover {
+                        color: white;
+                    }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #444;
+            color: #bbb;
+            font-size: 14px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            /* Header */
+            nav {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            /* About */
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+
+            /* Footer */
+            .footer-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            /* Hero */
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            /* Products */
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Footer */
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
 
-<!-- HEADER - From Second Code -->
-<header>
-  <div class="logo">
-    <img src="logo.png" alt="Reveal Automation & Controls">
-  </div>
-  <div class="hamburger" id="hamburger">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  <nav id="nav">
-    <a href="#home">Home</a>
-    <a href="#products">Products</a>
-    <a href="#about">About Us</a>
-    <a href="#contact" class="enquire-btn">Enquire Now</a>
-  </nav>
-</header>
+    <!-- HEADER - From Second Code -->
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="Reveal Automation & Controls">
+        </div>
+        <div class="hamburger" id="hamburger">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <nav id="nav">
+            <a href="#home">Home</a>
+            <a href="#products">Products</a>
+            <a href="#about">About Us</a>
+            <a href="#contact" class="enquire-btn">Enquire Now</a>
+        </nav>
+    </header>
 
-<div class="mobile-nav" id="mobileNav">
-  <a href="#home">Home</a>
-  <a href="#products">Products</a>
-  <a href="#about">About Us</a>
-  <a href="#contact" class="enquire-btn">Enquire Now</a>
-</div>
-
-<!-- HERO - From Second Code -->
-<section class="hero" id="home">
-  <img src="logo.png" alt="Packaging Machine">
-  <h1>Reveal Automation & Controls</h1>
-  <a href="#products" class="explore-button">Explore Our Products</a>
-</section>
-
-<!-- PRODUCTS - From First Code -->
-<section class="products" id="products">
-  <div class="container">
-    <div class="section-title">
-      <h2>Our Packaging Machines</h2>
-      <p>We offer a complete range of packaging machinery solutions for different product types and industries.</p>
+    <div class="mobile-nav" id="mobileNav">
+        <a href="#home">Home</a>
+        <a href="#products">Products</a>
+        <a href="#about">About Us</a>
+        <a href="#contact" class="enquire-btn">Enquire Now</a>
     </div>
-    
-    <div class="products-grid">
-      <!-- Product 1 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/SP-200_with_Servo_Auger_Filler_Machine.png');"></div>
-        <div class="product-info">
-          <h3>SP-200 with Servo Auger Filler Machine</h3>                       
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-      
-      <!-- Product 2 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/SP-200_with_Multi_Head_Weigher.png');"></div>
-        <div class="product-info">
-          <h3>SP-200 with Multi Head Weigher</h3>                        
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-      
-      <!-- Product 3 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/SP-200_Packaging_Machine_with_4_Head_Weigher.png');"></div>
-        <div class="product-info">
-          <h3>SP-200 Packaging Machine with 4 Head Weigher</h3>                       
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-      
-      <!-- Product 4 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/SP-250_Multi_Head_Weigher.png');"></div>
-        <div class="product-info">
-          <h3>SP-250 Multi Head Weigher</h3>
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-      
-      <!-- Product 5 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/SP-250_Cup_Filler_Packaging_Machine.png');"></div>
-        <div class="product-info">
-          <h3>SP-250 Cup Filler Packaging Machine</h3>
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-      
-      <!-- Product 6 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/SP-250_Servo_Auger_Filler.png');"></div>
-        <div class="product-info">
-          <h3>SP-250 Servo Auger Filler</h3>
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-      
-      <!-- Product 7 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/SP-400_with_Multi_Head_Filler.png');"></div>
-        <div class="product-info">
-          <h3>SP-400 with Multi Head Filler</h3>
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-      
-      <!-- Product 8 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/Servo_Auger_Filler.png');"></div>
-        <div class="product-info">
-          <h3>Servo Auger Filler</h3>
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-      
-      <!-- Product 9 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/Electronic_Filler.png');"></div>
-        <div class="product-info">
-          <h3>Electronic Filler</h3>
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-      
-      <!-- Product 10 -->
-      <div class="product-card">
-        <div class="product-img" style="background-image: url('Machines/Auger_Filling_Feed_Bag_Filling_Machine.png');"></div>
-        <div class="product-info">
-          <h3>Auger Filling Feed Bag Filling Machine</h3>
-          <a href="#contact" class="btn">Inquire Now</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ABOUT - From First Code -->
-<section class="about" id="about">
-  <div class="container">
-    <div class="about-content">
-      <div class="about-img">
-        <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Our Factory">
-      </div>
-      <div class="about-text">
-        <h2>About Reveal Automation & Controls</h2>
-        <p>With over 15 years of experience in the packaging industry, Reveal Automation & Controls has established itself as a leading manufacturer and supplier of high-quality packaging machinery.</p>
-        <p>Our mission is to provide innovative, reliable, and cost-effective packaging solutions that help our clients improve efficiency, reduce waste, and enhance product presentation.</p>
-        <p>All our machines are manufactured with premium components and undergo rigorous quality testing to ensure long-term performance and minimal downtime.</p>
-        <a href="#contact" class="btn">Contact Us</a>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- HERO - From Second Code -->
+    <section class="hero" id="home">
+        <img src="logo.png" alt="Packaging Machine">
+        <h1>Reveal Automation & Controls</h1>
+        <a href="#products" class="explore-button">Explore Our Products</a>
+    </section>
 
-<!-- CONTACT - From First Code -->
-<section class="contact" id="contact">
-  <div class="container">
-    <div class="section-title">
-      <h2>Get In Touch</h2>
-      <p>Have questions about our packaging machines? Contact our sales team for more information and quotes.</p>
-    </div>
-    
-    <div class="contact-container">
-      <div class="contact-info">
-        <h3>Contact Information</h3>
-        <p><strong>Address:</strong> Shop no 15, A Wing, Green Vision, Alandi, Pune, India</p>
-        <p><strong>Phone:</strong> +91-9168421046</p>
-        <p><strong>Email:</strong> sales@revealautomation.com</p>
-        <p><strong>Hours:</strong> Mon-Fri: 9AM - 6PM</p>
-      </div>
-      
-      <div class="contact-form">
-        <form>
-          <input type="text" placeholder="Your Name" required>
-          <input type="email" placeholder="Your Email" required>
-          <input type="tel" placeholder="Phone Number">
-          <select>
-            <option value="">Select Machine Type</option>
-            <option>SP-200 with Servo Auger Filler Machine</option>
-            <option>SP-200 with Multi Head Weigher</option>
-            <option>SP-200 Packaging Machine with 4 Head Weigher</option>
-            <option>SP-250 Multi Head Weigher</option>
-            <option>SP-250 Cup Filler Packaging Machine</option>
-            <option>SP-250 Servo Auger Filler</option>
-            <option>SP-400 with Multi Head Filler</option>
-            <option>Servo Auger Filler</option>
-            <option>Electronic Filler</option>
-            <option>Auger Filling Feed Bag Filling Machine</option>
-          </select>
-          <textarea placeholder="Your Message"></textarea>
-          <button type="submit" class="btn">Send Inquiry</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</section>
+    <!-- PRODUCTS - From First Code -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Packaging Machines</h2>
+                <p>We offer a complete range of packaging machinery solutions for different product types and industries.</p>
+            </div>
 
-<!-- FOOTER - From First Code -->
-<footer>
-  <div class="container">
-    <div class="footer-container">
-      <div class="footer-col">
-        <h3>Reveal Automation & Controls</h3>
-        <p>Leading manufacturer of packaging machinery for food and industrial applications since 2005.</p>
-      </div>
-      
-      <div class="footer-col">
-        <h3>Quick Links</h3>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#products">Products</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-      
-      
-      <div class="footer-col">
-        <h3>Connect With Us</h3>
-        <ul>
-          <li><a href="#">LinkedIn</a></li>
-          <li><a href="#">Facebook</a></li>
-          <li><a href="#">Twitter</a></li>
-          <li><a href="#">YouTube</a></li>
-        </ul>
-      </div>
-    </div>
-    
-    <div class="copyright">
-      <p>&copy; 2023 Reveal Automation & Controls. All Rights Reserved.</p>
-    </div>
-  </div>
-</footer>
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/SP-200_with_Servo_Auger_Filler_Machine.png');"></div>
+                    <div class="product-info">
+                        <h3>SP-200 with Servo Auger Filler Machine</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
 
-<script>
-    // Mobile Navigation Toggle
-    const hamburger = document.getElementById('hamburger');
-    const mobileNav = document.getElementById('mobileNav');
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/SP-200_with_Multi_Head_Weigher.png');"></div>
+                    <div class="product-info">
+                        <h3>SP-200 with Multi Head Weigher</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
 
-    hamburger.addEventListener('click', () => {
-        mobileNav.classList.toggle('active');
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/SP-200_Packaging_Machine_with_4_Head_Weigher.png');"></div>
+                    <div class="product-info">
+                        <h3>SP-200 Packaging Machine with 4 Head Weigher</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
 
-        // Animate hamburger to X
-        hamburger.children[0].style.transform = mobileNav.classList.contains('active') ? 'rotate(45deg) translate(5px, 5px)' : '';
-        hamburger.children[1].style.opacity = mobileNav.classList.contains('active') ? '0' : '1';
-        hamburger.children[2].style.transform = mobileNav.classList.contains('active') ? 'rotate(-45deg) translate(5px, -5px)' : '';
-    });
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/SP-250_Multi_Head_Weigher.png');"></div>
+                    <div class="product-info">
+                        <h3>SP-250 Multi Head Weigher</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
 
-    // Smooth scrolling for anchor links with offset for fixed header
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/SP-250_Cup_Filler_Packaging_Machine.png');"></div>
+                    <div class="product-info">
+                        <h3>SP-250 Cup Filler Packaging Machine</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
 
-            const headerHeight = document.querySelector('header').offsetHeight;
-            const targetElement = document.querySelector(this.getAttribute('href'));
-            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-            const offsetPosition = elementPosition - headerHeight;
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/SP-250_Servo_Auger_Filler.png');"></div>
+                    <div class="product-info">
+                        <h3>SP-250 Servo Auger Filler</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/SP-400_with_Multi_Head_Filler.png');"></div>
+                    <div class="product-info">
+                        <h3>SP-400 with Multi Head Filler</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
+
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/Servo_Auger_Filler.png');"></div>
+                    <div class="product-info">
+                        <h3>Servo Auger Filler</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
+
+                <!-- Product 9 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/Electronic_Filler.png');"></div>
+                    <div class="product-info">
+                        <h3>Electronic Filler</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
+
+                <!-- Product 10 -->
+                <div class="product-card">
+                    <div class="product-img" style="background-image: url('Machines/Auger_Filling_Feed_Bag_Filling_Machine.png');"></div>
+                    <div class="product-info">
+                        <h3>Auger Filling Feed Bag Filling Machine</h3>
+                        <a href="#contact" class="btn">Inquire Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ABOUT - From First Code -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Our Factory">
+                </div>
+                <div class="about-text">
+                    <h2>About Reveal Automation & Controls</h2>
+                    <p>With over 15 years of experience in the packaging industry, Reveal Automation & Controls has established itself as a leading manufacturer and supplier of high-quality packaging machinery.</p>
+                    <p>Our mission is to provide innovative, reliable, and cost-effective packaging solutions that help our clients improve efficiency, reduce waste, and enhance product presentation.</p>
+                    <p>All our machines are manufactured with premium components and undergo rigorous quality testing to ensure long-term performance and minimal downtime.</p>
+                    <a href="#contact" class="btn">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT - From First Code -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>Have questions about our packaging machines? Contact our sales team for more information and quotes.</p>
+            </div>
+
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <p><strong>Address:</strong> Shop no 15, A Wing, Green Vision, Alandi, Pune, India</p>
+                    <p><strong>Phone:</strong> +91-9168421046</p>
+                    <p><strong>Email:</strong> sales@revealautomation.com</p>
+                    <p><strong>Hours:</strong> Mon-Fri: 9AM - 6PM</p>
+                </div>
+
+                <div class="contact-form">
+                    <form>
+                        <input type="text" placeholder="Your Name" required>
+                        <input type="email" placeholder="Your Email" required>
+                        <input type="tel" placeholder="Phone Number">
+                        <select>
+                            <option value="">Select Machine Type</option>
+                            <option>SP-200 with Servo Auger Filler Machine</option>
+                            <option>SP-200 with Multi Head Weigher</option>
+                            <option>SP-200 Packaging Machine with 4 Head Weigher</option>
+                            <option>SP-250 Multi Head Weigher</option>
+                            <option>SP-250 Cup Filler Packaging Machine</option>
+                            <option>SP-250 Servo Auger Filler</option>
+                            <option>SP-400 with Multi Head Filler</option>
+                            <option>Servo Auger Filler</option>
+                            <option>Electronic Filler</option>
+                            <option>Auger Filling Feed Bag Filling Machine</option>
+                        </select>
+                        <textarea placeholder="Your Message"></textarea>
+                        <button type="submit" class="btn">Send Inquiry</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER - From First Code -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>Reveal Automation & Controls</h3>
+                    <p>Leading manufacturer of packaging machinery for food and industrial applications since 2005.</p>
+                </div>
+
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#products">Products</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+
+                <div class="footer-col">
+                    <h3>Connect With Us</h3>
+                    <ul>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">YouTube</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="copyright">
+                <p>&copy; 2023 Reveal Automation & Controls. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Navigation Toggle - Updated version
+        const hamburger = document.getElementById('hamburger');
+        const mobileNav = document.getElementById('mobileNav');
+        const header = document.querySelector('header');
+
+        hamburger.addEventListener('click', () => {
+            mobileNav.classList.toggle('active');
+
+            // Animate hamburger to X
+            hamburger.children[0].style.transform = mobileNav.classList.contains('active') ? 'rotate(45deg) translate(5px, 5px)' : '';
+            hamburger.children[1].style.opacity = mobileNav.classList.contains('active') ? '0' : '1';
+            hamburger.children[2].style.transform = mobileNav.classList.contains('active') ? 'rotate(-45deg) translate(5px, -5px)' : '';
+        });
+
+        // Smooth scrolling for anchor links with offset for fixed header
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                // Close mobile menu if open
+                if (mobileNav.classList.contains('active')) {
+                    mobileNav.classList.remove('active');
+                    hamburger.children[0].style.transform = '';
+                    hamburger.children[1].style.opacity = '1';
+                    hamburger.children[2].style.transform = '';
+                }
+
+                const headerHeight = header.offsetHeight;
+                const targetElement = document.querySelector(this.getAttribute('href'));
+                const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                const offsetPosition = elementPosition - headerHeight;
+
+                window.scrollTo({
+                    top: offsetPosition,
+                    behavior: 'smooth'
+                });
             });
+        });
 
-            // Close mobile menu if open
-            if (mobileNav.classList.contains('active')) {
+        // Close menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (mobileNav.classList.contains('active') &&
+                !e.target.closest('#hamburger') &&
+                !e.target.closest('#mobileNav')) {
                 mobileNav.classList.remove('active');
                 hamburger.children[0].style.transform = '';
                 hamburger.children[1].style.opacity = '1';
                 hamburger.children[2].style.transform = '';
             }
         });
-    });
-</script>
+    </script>
 
 </body>
 </html>
